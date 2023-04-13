@@ -1,49 +1,37 @@
 <template>
   <div>
-    <ul>
-      <li v-for="(user, index) in users" :key="user.login.uuid">
-        <div>
-          <img :src="user.picture.large" />
-          <div>
-            <p><strong>Nome:</strong> {{ user.name.first }} {{ user.name.last }}</p>
-            <p><strong>Data de nascimento:</strong> {{ user.dob.date }}</p>
-            <p><strong>Telefone:</strong> {{ user.phone }}</p>
-            <button @click="showUser(index)">VIEW</button>
-          </div>
-        </div>
-
-      </li>
-    </ul>
-
-    <div v-if="selectedUser">
-      <h2>{{ selectedUser.name.first }} {{ selectedUser.name.last }}</h2>
-      <p><strong>Telefone(fixo):</strong> {{ selectedUser.phone }}</p>
-      <p><strong>Telefone(móvel):</strong> {{ selectedUser.cell }}</p>
-      <p><strong>Data Nascimento:</strong> {{ selectedUser.dob.date }}</p>
-      <p><strong>Sexo:</strong> {{ selectedUser.gender }}</p>
-    </div>
-    <button @click="addUser">ADD</button>
-  </div>
-
-
-  <body class="container mt-2">
     <div class="row">
-      <div clas="col-4">
+      <div class="col-4" v-for="(user, index) in users" :key="user.login.uuid">
         <div class="card" style="width: 18rem;">
-          <img src="https://randomuser.me/api/portraits/men/75.jpg" class="card-img-top" alt="...">
+          <img :src="user.picture.large" class="card-img-top" alt="User Image">
           <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-              content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+            <h5 class="card-title">{{ user.name.first }} {{ user.name.last }}</h5>
+            <p class="card-text">Data de nascimento: {{ user.dob.date }}</p>
+            <p class="card-text">Telefone: {{ user.phone }}</p>
+            <button class="btn btn-primary" @click="showUser(index)">VIEW</button>
           </div>
         </div>
-
       </div>
-
     </div>
 
-  </body>
+    <div class="row" v-if="selectedUser">
+      <div class="col-4">
+        <div class="card" style="width: 18rem;">
+          <img :src="selectedUser.picture.large" class="card-img-top" alt="User Image">
+          <div class="card-body">
+            <h5 class="card-title">{{ selectedUser.name.first }} {{ selectedUser.name.last }}</h5>
+            <p class="card-text">Telefone(fixo): {{ selectedUser.phone }}</p>
+            <p class="card-text">Telefone(móvel): {{ selectedUser.cell }}</p>
+            <p class="card-text">Data Nascimento: {{ selectedUser.dob.date }}</p>
+            <p class="card-text">Sexo: {{ selectedUser.gender }}</p>
+            <button class="btn btn-primary" @click="selectedUser = null">CLOSE</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn btn-primary" @click="addUser">ADD</button>
+  </div>
 </template>
 
 <script>
@@ -56,6 +44,7 @@ export default {
     const users = ref([]);
     const selectedUser = ref(null);
     const page = ref(1);
+
     const fetchUsers = (results, page) => {
       api.get(`https://api.randomuser.me/?results=${results}&page=${page}`)
         .then((response) => {
@@ -66,13 +55,16 @@ export default {
           console.error(error);
         });
     };
+
     const addUser = () => {
       fetchUsers(3, page.value);
       page.value += 1;
     };
+
     const showUser = (index) => {
       selectedUser.value = users.value[index];
     };
+
     onMounted(() => {
       fetchUsers(3, page.value);
       page.value += 1;
