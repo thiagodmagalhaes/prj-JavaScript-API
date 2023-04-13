@@ -5,8 +5,9 @@
         <div>
           <img :src="user.picture.large" />
           <div>
-            <p><strong>Nome:</strong> {{ user.name.first }}</p>
-            <p><strong>Sobrenome:</strong> {{ user.name.last }}</p>
+            <p><strong>Nome:</strong> {{ user.name.first }} {{ user.name.last }}</p>
+            <p><strong>Data de nascimento:</strong> {{ user.dob.date}}</p>
+            <p><strong>Telefone:</strong> {{ user.phone}}</p>
             <button @click="showUser(index)">VIEW</button>
           </div>
         </div>
@@ -19,6 +20,7 @@
       <p><strong>Data Nascimento:</strong> {{ selectedUser.dob.date }}</p>
       <p><strong>Sexo:</strong> {{ selectedUser.gender }}</p>
     </div>
+    <button @click="addUser">ADD</button>
   </div>
 </template>
 
@@ -31,25 +33,34 @@ export default {
   setup(){
     const users = ref([]);
     const selectedUser = ref(null);
-    const fetchUsers = () =>  {
-      api.get("https://api.randomuser.me/?results=3")
+    const page = ref(1);
+    const fetchUsers = (results, page) =>  {
+      api.get(`https://api.randomuser.me/?results=${results}&page=${page}`)
          .then((response) => {
-           users.value = response.data.results;
+           users.value = users.value.concat(response.data.results);
            console.log(response);
          })
          .catch((error) => {
            console.error(error);
          });
     };
+    const addUser = () => {
+      fetchUsers(3, page.value);
+      page.value += 1;
+    };
     const showUser = (index) => {
       selectedUser.value = users.value[index];
     };
-    onMounted(fetchUsers);
+    onMounted(() => {
+      fetchUsers(3, page.value);
+      page.value += 1;
+    });
 
     return {
       users,
       selectedUser,
-      showUser
+      showUser,
+      addUser
     }
   }
 }
