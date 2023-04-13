@@ -1,53 +1,58 @@
 <template>
   <div>
-    <button v-if="!showUsers" @click="fetchUsers">View</button>
-    <ul v-if="showUsers">
-      <li v-for="user in users" :key="user.login.uuid">
+    <ul>
+      <li v-for="(user, index) in users" :key="user.login.uuid">
         <div>
           <img :src="user.picture.large" />
           <div>
             <p><strong>Nome:</strong> {{ user.name.first }}</p>
             <p><strong>Sobrenome:</strong> {{ user.name.last }}</p>
-            <p><strong>Telefone(fixo):</strong> {{ user.phone }}</p>
-            <p><strong>Telefone(móvel):</strong> {{ user.cell }}</p>
-            <p><strong>Data Nascimento:</strong> {{ user.dob.date }}</p>
-            <p><strong>Sexo:</strong> {{ user.gender }}</p>
+            <button @click="showUser(index)">VIEW</button>
           </div>
         </div>
       </li>
     </ul>
+    <div v-if="selectedUser">
+      <h2>{{ selectedUser.name.first }} {{ selectedUser.name.last }}</h2>
+      <p><strong>Telefone(fixo):</strong> {{ selectedUser.phone }}</p>
+      <p><strong>Telefone(móvel):</strong> {{ selectedUser.cell }}</p>
+      <p><strong>Data Nascimento:</strong> {{ selectedUser.dob.date }}</p>
+      <p><strong>Sexo:</strong> {{ selectedUser.gender }}</p>
+    </div>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import api from '@/services/api';
 
 export default {
   name: 'App',
-  setup() {
+  setup(){
     const users = ref([]);
-    const showUsers = ref(false);
-
+    const selectedUser = ref(null);
     const fetchUsers = () =>  {
       api.get("https://api.randomuser.me/?results=3")
          .then((response) => {
            users.value = response.data.results;
            console.log(response);
-           showUsers.value = true;
          })
          .catch((error) => {
            console.error(error);
          });
     };
+    const showUser = (index) => {
+      selectedUser.value = users.value[index];
+    };
+    onMounted(fetchUsers);
 
     return {
       users,
-      showUsers,
-      fetchUsers,
-    };
-  },
-};
+      selectedUser,
+      showUser
+    }
+  }
+}
 </script>
 
 <style>
