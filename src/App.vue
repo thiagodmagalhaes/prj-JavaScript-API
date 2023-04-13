@@ -1,6 +1,7 @@
 <template>
   <div>
-    <ul>
+    <button v-if="!showUsers" @click="fetchUsers">View</button>
+    <ul v-if="showUsers">
       <li v-for="user in users" :key="user.login.uuid">
         <div>
           <img :src="user.picture.large" />
@@ -19,30 +20,34 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import api from '@/services/api';
 
 export default {
   name: 'App',
-  setup(){
+  setup() {
     const users = ref([]);
+    const showUsers = ref(false);
+
     const fetchUsers = () =>  {
       api.get("https://api.randomuser.me/?results=3")
          .then((response) => {
            users.value = response.data.results;
            console.log(response);
+           showUsers.value = true;
          })
          .catch((error) => {
            console.error(error);
          });
     };
-    onMounted(fetchUsers);
 
     return {
-      users
-    }
-  }
-}
+      users,
+      showUsers,
+      fetchUsers,
+    };
+  },
+};
 </script>
 
 <style>
