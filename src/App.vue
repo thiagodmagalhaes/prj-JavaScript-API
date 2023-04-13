@@ -2,7 +2,17 @@
   <div>
     <ul>
       <li v-for="user in users" :key="user.login.uuid">
-        {{ user.name.first }} {{ user.name.last }}
+        <div>
+          <img :src="user.picture.large" />
+          <div>
+            <p><strong>Nome:</strong> {{ user.name.first }}</p>
+            <p><strong>Sobrenome:</strong> {{ user.name.last }}</p>
+            <p><strong>Telefone(fixo):</strong> {{ user.phone }}</p>
+            <p><strong>Telefone(móvel):</strong> {{ user.cell }}</p>
+            <p><strong>Data Nascimento:</strong> {{ user.dob.date }}</p>
+            <p><strong>Sexo:</strong> {{ user.gender }}</p>
+          </div>
+        </div>
       </li>
     </ul>
   </div>
