@@ -1,27 +1,40 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
-  <button type="button" class="btn btn-primary">Primary</button>
+  <div>
+    <ul>
+      <li v-for="user in users" :key="user.login.uuid">
+        {{ user.name.first }} {{ user.name.last }}
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import { ref, onMounted } from 'vue';
+import api from '@/services/api';
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  setup(){
+    const users = ref([]);
+    const fetchUsers = () =>  {
+      api.get("https://api.randomuser.me/?results=3")
+         .then((response) => {
+           users.value = response.data.results;
+           console.log(response);
+         })
+         .catch((error) => {
+           console.error(error);
+         });
+    };
+    onMounted(fetchUsers);
+
+    return {
+      users
+    }
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+/* Estilo do seu componente aqui */
 </style>
