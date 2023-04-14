@@ -2,8 +2,8 @@
   <div>
   <section class="container">
     <div class="row">
-      <div class="card col-12 col-sm-12" style="width: 11rem;"  v-for="(user, index) in users" :key="user.login.uuid" >
-       
+      <div class="col-4" v-for="(user, index) in users" :key="user.login.uuid">
+        <div class="card col-sm-12" style="width: 18rem;">
           <img :src="user.picture.large" class="card-img-top" alt="...">
           <div class="card-body">
             <h5 class="card-title">{{ user.name.first }} {{ user.name.last }}</h5>
@@ -14,7 +14,7 @@
             </p>
             <button class="btn btn-primary" @click="showUser(index)">VIEW</button>
           </div>
-        
+        </div>
       </div>
     </div>
   </section>
