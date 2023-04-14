@@ -1,5 +1,6 @@
 <template>
   <div>
+  <section class="container">
     <div class="row">
       <div class="col-4" v-for="(user, index) in users" :key="user.login.uuid">
         <div class="card" style="width: 18rem;">
@@ -7,7 +8,7 @@
           <div class="card-body">
             <h5 class="card-title">{{ user.name.first }} {{ user.name.last }}</h5>
             <p class="card-text">
-              <strong>Data de nascimento:</strong> {{ user.dob.date }}
+              <strong>Data de nascimento:</strong> {{ user.dob.date.slice(0, 10)}}
               <br>
               <strong>Telefone:</strong> {{ user.phone }}
             </p>
@@ -16,36 +17,8 @@
         </div>
       </div>
     </div>
-
-      <body>
-    <section class="container">
-      <div class="card">
-        <div class="image">
-          <img src="images/img1.jpg" alt="" />
-        </div>
-        <h2>Someone Name</h2>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elite.</p>
-      </div>
-    </section>
-  </body>
-  <section class="container">
-    <div class="row">
-      <div class="col-4" v-for="user in users" :key="user.login.uuid">
-        <div class="card" style="width: 18rem;">
-          <img :src="user.picture.large" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">{{ user.name.first }} {{ user.name.last }}</h5>
-            <p class="card-text">
-              <strong>Data de nascimento:</strong> {{ user.dob.date }}
-              <br>
-              <strong>Telefone:</strong> {{ user.phone }}
-            </p>
-            <button class="btn btn-primary" @click="showUser(user)">VIEW</button>
-          </div>
-        </div>
-      </div>
-    </div>
   </section>
+
 
     <div v-if="selectedUser" class="overlay">
       <div class="card overlay-content">
