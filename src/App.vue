@@ -10,22 +10,49 @@
 
         <div class="col-sm-3 col-12" v-for="(user, index) in users" :key="user.login.uuid">
           <div class="card m-10 mb-3">
-            <i class="fa fa-mars iconeSex m-10 mb-3"></i>
+            <i v-if="verificaSexo(user,)" class="fa fa-venus iconeSex m-10 mb-3"></i>
+            <i v-else class="fa fa-mars iconeSex m-10 mb-3"></i>
             <img :src="user.picture.large" class="fotoredonda " alt="...">
             <div class="card-body">
-              <div class="col-12 d-flex justify-content-center" style="white-space: nowrap">{{ user.name.first }} {{ user.name.last }}</div>
+              <div class="col-12 d-flex justify-content-center" style="white-space: nowrap">{{ user.name.first }} {{
+                user.name.last }}</div>
               <div class="col-12 ajusteData d-flex justify-content-center "><strong>{{ user.dob.date }}</strong></div>
               <div class="col-12 ajusteTel" style="white-space: nowrap;"><strong>{{ user.phone }}</strong></div>
-              <button class="btn btn-primary botaoVIEW" @click="showUser(index)">VIEW</button>
+              <button class="btn btn-primary botaoVIEW" @click="showUser(index)" data-toggle="modal"
+                data-target="#myModal">VIEW</button>
             </div>
           </div>
         </div>
       </div>
     </section>
 
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header row">
+            <div class="fas fa-angle-left col-3 "></div> 
+            <div class="fas fa-angle-left col-5 "></div> 
+          </div>
+          <div class="modal-header row">
+            <div></div>
+            <div calss="col-12"><img :src="selectedUser?.picture.large" class="card-img-top" alt="..."> </div>
+          
+          <h5>{{ selectedUser?.name.first }} {{ selectedUser?.name.last }} </h5>
+          <button class="close" @click="selectedUser = null">FECHAR</button>
+          </div>
+          <div class="modal-body">
+            <p>Conteúdo do Modal</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            <button type="button" class="btn btn-primary">Salvar mudanças</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    <div v-if="selectedUser" class="overlay">
-      <div class="card overlay-content">
+    <div v-if="selectedUser" class="modal-dialog modal-dialog-centered modal-dialog-scrollable" id="cardModal">
+      <div class="card">
         <div class="card-header">
           <img :src="selectedUser.picture.large" class="card-img-top" alt="...">
           <h5 class="card-title">{{ selectedUser.name.first }} {{ selectedUser.name.last }} </h5>
@@ -57,6 +84,13 @@ export default {
     const users = ref([]);
     const selectedUser = ref(null);
     const page = ref(1);
+
+
+
+
+
+
+
     function formatarTelefone(numero) {
       // Remove todos os caracteres não numéricos do número original
       let numeroLimpo = numero.replace(/\D/g, '');
@@ -69,19 +103,39 @@ export default {
       return telefoneFormatado;
     }
 
+
+
+    function verificaSexo(user) {
+      if (user.gender === 'female') {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+
+
     const fetchUsers = (results, page) => {
+
+
       api.get(`https://api.randomuser.me/?results=${results}&page=${page}`)
         .then((response) => {
           response.data.results.forEach((user) => {
             user.dob.date = formatarData(user.dob.date);
             user.phone = formatarTelefone(user.phone);
+
+
+
           });
           users.value = users.value.concat(response.data.results);
           console.log(response);
+
         })
         .catch((error) => {
           console.error(error);
+
         });
+
     };
 
     const formatarData = (data) => {
@@ -110,6 +164,7 @@ export default {
     return {
       users,
       selectedUser,
+      verificaSexo,
       showUser,
       addUser
     }
@@ -118,10 +173,10 @@ export default {
 </script>
 
 <style>
-
-.ajusteNome{
+.ajusteNome {
   white-space: nowrap;
 }
+
 .card {
   height: 400px !important;
 }
@@ -133,12 +188,13 @@ export default {
 
 }
 
-.botaoVIEW{
+.botaoVIEW {
   padding: 15px;
-  background-color:rgba(217, 155, 241, 0.5) !important;
+  background-color: rgba(217, 155, 241, 0.5) !important;
   border-color: transparent !important;
   width: 200px;
 }
+
 .iconeSex {
   font-size: 40px;
   position: absolute;
