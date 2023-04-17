@@ -8,17 +8,18 @@
           </div>
         </div>
 
-        <div class="col-sm-3 col-12" v-for="(user, index) in users" :key="user.login.uuid">
+        <div class="col-sm-3 col-12" v-for="(user, index) in users.reverse()" :key="user.login.uuid">
           <div class="card m-10 mb-3">
             <i v-if="verificaSexo(user,)" class="fa fa-venus iconeSex m-10 mb-3"></i>
             <i v-else class="fa fa-mars iconeSex m-10 mb-3"></i>
             <img :src="user.picture.large" class="fotoredonda " alt="...">
-            <div class="card-body">
+            <div class="card-body row">
               <div class="col-12 d-flex justify-content-center" style="white-space: nowrap">{{ user.name.first }} {{
                 user.name.last }}</div>
               <div class="col-12 ajusteData d-flex justify-content-center "><strong>{{ user.dob.date }}</strong></div>
-              <div class="col-12 ajusteTel" style="white-space: nowrap;"><strong>{{ user.phone }}</strong></div>
-              <button class="btn btn-primary botaoVIEW" @click="showUser(index)" data-toggle="modal"
+              <div class="col-12 ajusteTel text-center" style="white-space: nowrap;"><strong>{{ user.phone }}</strong>
+              </div>
+              <button class="btn btn-primary botaoVIEW rounded-pill" @click="showUser(index)" data-toggle="modal"
                 data-target="#myModal">VIEW</button>
             </div>
           </div>
@@ -28,48 +29,61 @@
 
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
       <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header row">
-            <div class="fas fa-angle-left col-3 "></div> 
-            <div class="fas fa-angle-left col-5 "></div> 
+        <div class="modal-content inserirborda">
+          <div class="rowNEW">
+            <div class="row">
+              <div class="col-1">
+                <button type="button" class="fas fa-angle-left iconeVoltar fa-3x" style="float: left;"
+                  data-dismiss="modal"></button>
+              </div>
+              <div class="col-10">
+                <h5 class="text-center white mt-3" style="color: white;">View Profile</h5>
+              </div>
+              <div class="col-1">
+                <div class="fas fa-plus plus iconeMais fa-2x m-2" style="float: right;"></div>
+              </div>
+            </div>
+            <div class="row">
+              <div calss="col-12"><img :src="selectedUser?.picture.large" class="fotoredondaVIEW" alt="..."> </div>
+            </div>
+            <div class="row">
+              <div class="col-12 d-flex justify-content-center" style="white-space: nowrap ; color:white">
+                <h4>{{ selectedUser?.name.first }} {{
+                  selectedUser?.name.last }}</h4>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 d-flex justify-content-center" style="white-space: nowrap">
+                <h6>{{ selectedUser?.location.city }},{{
+                  selectedUser?.location.state }}</h6>
+              </div>
+            </div>
+
+
+
           </div>
-          <div class="modal-header row">
-            <div></div>
-            <div calss="col-12"><img :src="selectedUser?.picture.large" class="card-img-top" alt="..."> </div>
-          
-          <h5>{{ selectedUser?.name.first }} {{ selectedUser?.name.last }} </h5>
-          <button class="close" @click="selectedUser = null">FECHAR</button>
-          </div>
+
+
           <div class="modal-body">
-            <p>Conteúdo do Modal</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-            <button type="button" class="btn btn-primary">Salvar mudanças</button>
+            <div class="row ">
+              <p style="color: rgb(26,13,179);">Email</p><br><p>{{ selectedUser?.email }}</p>
+            </div>
+            <div class="row ">
+              <hr>
+              <p style="color: rgb(26,13,179);">Tel</p><br><p>{{ selectedUser?.phone }}</p>
+            </div>
+            <div class="row ">
+              <hr>
+              <p style="color: rgb(26,13,179);">Cell</p><br><p>{{ selectedUser?.cell }}</p>
+            </div>
+            <div class="row ">
+              <hr>
+              <p style="color: rgb(26,13,179);">Data de nascimento</p><br><p>{{ selectedUser?.dob.date }}</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
-
-    <div v-if="selectedUser" class="modal-dialog modal-dialog-centered modal-dialog-scrollable" id="cardModal">
-      <div class="card">
-        <div class="card-header">
-          <img :src="selectedUser.picture.large" class="card-img-top" alt="...">
-          <h5 class="card-title">{{ selectedUser.name.first }} {{ selectedUser.name.last }} </h5>
-          <button class="close" @click="selectedUser = null">FECHAR</button>
-        </div>
-        <div class="card-body">
-          <p><strong>Telefone(fixo):</strong> {{ selectedUser.phone }}</p>
-          <p><strong>Telefone(móvel):</strong> {{ selectedUser.cell }}</p>
-          <p><strong>Data Nascimento:</strong>{{ selectedUser.dob.date.slice(0, 10) }}</p>
-          <p><strong>Sexo:</strong> {{ selectedUser.gender }}</p>
-          <p><strong>Localização:</strong> {{ selectedUser.location.city }}, {{ selectedUser.location.state }}</p>
-          <p><strong>Email:</strong> {{ selectedUser.email }}</p>
-        </div>
-      </div>
-    </div>
-
-
   </div>
 </template>
 
@@ -123,7 +137,7 @@ export default {
           response.data.results.forEach((user) => {
             user.dob.date = formatarData(user.dob.date);
             user.phone = formatarTelefone(user.phone);
-
+            user.cell = formatarTelefone(user.cell);
 
 
           });
@@ -173,6 +187,27 @@ export default {
 </script>
 
 <style>
+.iconeVoltar {
+  background-color: rgb(101,210,242);
+  border: 1px solid rgb(101,210,242);
+  color: rgb(255, 255, 255);
+
+}
+
+.iconeMais {
+  color: rgb(255, 255, 255);
+}
+
+.rowNEW {
+  background-color: rgb(101,210,242) !important;
+
+}
+
+.inserirborda {
+  border: 1px solid #000;
+  /* adiciona uma borda sólida de 1 pixel de largura na cor preta */
+}
+
 .ajusteNome {
   white-space: nowrap;
 }
@@ -183,7 +218,7 @@ export default {
 
 .cardTrasparente {
   height: 400px !important;
-  background-color: rgba(255, 255, 255, 0) !important;
+  background-color: rgba(47, 228, 252, 0) !important;
 
 
 }
@@ -193,6 +228,7 @@ export default {
   background-color: rgba(217, 155, 241, 0.5) !important;
   border-color: transparent !important;
   width: 200px;
+
 }
 
 .iconeSex {
@@ -210,10 +246,24 @@ export default {
 .ajusteTel {
   padding: 10px;
   white-space: nowrap;
+  margin-top: -19px !important;
 }
 
 .fotoredonda {
   border-radius: 100%;
+
+}
+
+.fotoredondaVIEW {
+  border-radius: 100%;
+  height: 300px;
+  position: relative;
+  /* define o posicionamento relativo */
+  left: 90px;
+  /* move a imagem 50 pixels para a direita */
+  top: 0px;
+  border: 2px solid rgb(255, 255, 255);
+
 
 }
 
@@ -254,5 +304,4 @@ export default {
 
 
 
-}
-</style>
+}</style>
