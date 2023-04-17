@@ -62,11 +62,11 @@ Dentro do "App.vue":
 - Modificação final do desgin do template apos clicar em  "VIEW";
 
 Referências bibliográficas:
-https://www.youtube.com/watch?v=cGFjn40VJ-M
-https://www.youtube.com/watch?v=tW0H5ReNBzo
-https://www.youtube.com/watch?v=PPLW5iFgSEg
-https://www.youtube.com/watch?v=kB5e-gTAl_s
-https://www.youtube.com/watch?v=lzbRNx05S00
-https://www.youtube.com/watch?v=LPFEtLSJrEQ
-https://www.youtube.com/watch?v=agcvY0vfdF8
-https://www.youtube.com/watch?v=GvGYlBYtlAk
+- https://www.youtube.com/watch?v=cGFjn40VJ-M
+- https://www.youtube.com/watch?v=tW0H5ReNBzo
+- https://www.youtube.com/watch?v=PPLW5iFgSEg
+- https://www.youtube.com/watch?v=kB5e-gTAl_s
+- https://www.youtube.com/watch?v=lzbRNx05S00
+- https://www.youtube.com/watch?v=LPFEtLSJrEQ
+- https://www.youtube.com/watch?v=agcvY0vfdF8
+- https://www.youtube.com/watch?v=GvGYlBYtlAk
