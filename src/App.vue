@@ -66,19 +66,19 @@
 
           <div class="modal-body">
             <div class="row ">
-              <p style="color: rgb(26,13,179);">Email</p><br><p>{{ selectedUser?.email }}</p>
+              <p style="color: rgb(26,13,179) ;">Email</p><br><p style="margin-top: -15px;">{{ selectedUser?.email }}</p>
             </div>
             <div class="row ">
               <hr>
-              <p style="color: rgb(26,13,179);">Tel</p><br><p>{{ selectedUser?.phone }}</p>
+              <p style="color: rgb(26,13,179); margin-top: -15px;">Tel</p><br><p style="margin-top: -15px;">{{ selectedUser?.phone }}</p>
             </div>
             <div class="row ">
               <hr>
-              <p style="color: rgb(26,13,179);">Cell</p><br><p>{{ selectedUser?.cell }}</p>
+              <p style="color: rgb(26,13,179); margin-top: -15px;">Cell</p><br><p style="margin-top: -15px;">{{ selectedUser?.cell }}</p>
             </div>
             <div class="row ">
               <hr>
-              <p style="color: rgb(26,13,179);">Data de nascimento</p><br><p>{{ selectedUser?.dob.date }}</p>
+              <p style="color: rgb(26,13,179); margin-top: -15px;">Data de nascimento</p><br><p style="margin-top: -15px;">{{ selectedUser?.dob.date }}</p>
             </div>
           </div>
         </div>
@@ -204,7 +204,7 @@ export default {
 }
 
 .inserirborda {
-  border: 1px solid #000;
+  border: 2px solid #000;
   /* adiciona uma borda sólida de 1 pixel de largura na cor preta */
 }
 
