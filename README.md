@@ -1,5 +1,5 @@
 # prj-JavaScript-API
-##Este projeto foi desenvolvido para cumprir um desafio. Devido a isto, irei compartilhar o passo-a-passo de como foi desenvolvido.
+## Este projeto foi desenvolvido para cumprir um desafio. Devido a isto, irei compartilhar o passo-a-passo de como foi desenvolvido.
 Primeiro procurei os vídeos que irão me auxiliar em todo este projeto.
 Todos vídeos utilizados para criação desse projeto estará na referência bibliográfica.
 O projeto consiste em consumir uma API e apresentar os dados em uma interface, através do JavaScript.
